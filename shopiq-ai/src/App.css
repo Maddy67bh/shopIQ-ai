@@ -908,3 +908,40 @@ a:focus-visible {
   .shopiq-chat-panel { animation: none; }
   .shopiq-profile-main,.shopiq-stat-card,.shopiq-assistant-launcher { transition: none; }
 }
+
+
+/* Premium Sign In navigation button */
+.sign-in-button {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 17px;
+  border: 1px solid #214b38;
+  border-radius: 5px;
+  background: #214b38;
+  color: #faf9f5;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.sign-in-button:hover {
+  background: #173728;
+  transform: translateY(-1px);
+}
+@media (max-width: 600px) {
+  .sign-in-button {
+    min-height: 36px;
+    gap: 5px;
+    padding: 0 9px;
+    font-size: 11px;
+  }
+  .sign-in-button svg {
+    width: 14px;
+    height: 14px;
+  }
+}

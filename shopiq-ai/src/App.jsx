@@ -159,6 +159,14 @@ export default function App() {
             onClick={() => document.getElementById("cart-panel").scrollIntoView({ behavior: "smooth" })}>
             <ShoppingBag size={18}/> Bag <b>{cartCount}</b>
           </button>
+          <button
+            className="sign-in-button"
+            onClick={() => notify("Sign in is not connected yet.")}
+            aria-label="Sign in to your account"
+          >
+            <UserRound size={16} />
+            <span>Sign In</span>
+          </button>
         </div>
       </header>
 
