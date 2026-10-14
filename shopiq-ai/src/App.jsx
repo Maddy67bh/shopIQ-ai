@@ -1,10 +1,9 @@
+import OrderFlow from "./OrderFlow";
 import "./shopiq-animations.css";
 import { useState } from "react";
 import LocationPicker from "./LocationPicker";
-import {
-  Search, ShoppingBag, Heart, Sparkles, ArrowRight, Star,
-  TrendingUp, Zap, Menu, Bot, UserRound, Send, MessageCircle, X
-} from "lucide-react";
+import {Search, ShoppingBag, Heart, Sparkles, ArrowRight, Star,
+  TrendingUp, Zap, Menu, Bot, UserRound, Send, MessageCircle, X, PackageCheck} from "lucide-react";
 import "./App.css";
 
 const products = [
@@ -20,6 +19,109 @@ const categories = ["All Products", "Electronics", "Lifestyle", "Accessories", "
 const money = n => "₹" + n.toLocaleString("en-IN");
 
 export default function App() {
+
+  // SHOPIQ_DEMO_AUTH_V1
+  const [authOpen, setAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState("signin");
+  const [authName, setAuthName] = useState("");
+  const [authEmail, setAuthEmail] = useState("");
+  const [authPassword, setAuthPassword] = useState("");
+  const [authMessage, setAuthMessage] = useState("");
+  const [authUser, setAuthUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("shopiq-demo-session-v1") || "null");
+    } catch {
+      return null;
+    }
+  });
+
+  async function handleShopiqAuth(event) {
+    event.preventDefault();
+    setAuthMessage("");
+
+    const email = authEmail.trim().toLowerCase();
+    const password = authPassword;
+
+    if (!email || !password) {
+      setAuthMessage("Please enter your email and password.");
+      return;
+    }
+
+    if (authMode === "signup" && !authName.trim()) {
+      setAuthMessage("Please enter your name.");
+      return;
+    }
+
+    if (authMode === "signup" && password.length < 8) {
+      setAuthMessage("Password must contain at least 8 characters.");
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setAuthMessage("Please enter a valid email address.");
+      return;
+    }
+
+    try {
+      if (!window.crypto?.subtle) {
+        setAuthMessage("Secure demo sign-in is unavailable in this browser.");
+        return;
+      }
+
+      const hashPassword = async (value) => {
+        const bytes = new TextEncoder().encode(value);
+        const digest = await crypto.subtle.digest("SHA-256", bytes);
+        return Array.from(new Uint8Array(digest))
+          .map(byte => byte.toString(16).padStart(2, "0"))
+          .join("");
+      };
+
+      const accounts = JSON.parse(
+        localStorage.getItem("shopiq-demo-accounts-v1") || "{}"
+      );
+
+      if (authMode === "signup") {
+        if (accounts[email]) {
+          setAuthMessage("An account with this email already exists. Please sign in.");
+          return;
+        }
+
+        accounts[email] = {
+          name: authName.trim(),
+          passwordHash: await hashPassword(password)
+        };
+
+        localStorage.setItem("shopiq-demo-accounts-v1", JSON.stringify(accounts));
+      } else {
+        const account = accounts[email];
+        if (!account || account.passwordHash !== await hashPassword(password)) {
+          setAuthMessage("Email or password is incorrect. Please try again.");
+          return;
+        }
+      }
+
+      const account = accounts[email];
+      const session = { name: account.name, email };
+      localStorage.setItem("shopiq-demo-session-v1", JSON.stringify(session));
+      setAuthUser(session);
+      setAuthPassword("");
+      setAuthOpen(false);
+      setAuthMessage("");
+      notify(authMode === "signup" ? "Demo account created successfully!" : "Welcome back!");
+    } catch {
+      setAuthMessage("Unable to complete this demo action. Please try again.");
+    }
+  }
+
+  function shopiqSignOut() {
+    localStorage.removeItem("shopiq-demo-session-v1");
+    setAuthUser(null);
+    notify("You have signed out.");
+  }
+
+  const [orderFlowOpen, setOrderFlowOpen] = useState(false);
+  const [orderFlowMode, setOrderFlowMode] = useState("checkout");
+
   const [locationPickerOpen, setLocationPickerOpen] = useState(false);
   const [deliveryLocation, setDeliveryLocation] = useState(null);
 
@@ -149,6 +251,9 @@ export default function App() {
         </nav>
 
         <div className="nav-actions">
+          <button className="track-order-nav" onClick={() => { setOrderFlowMode("tracking"); setOrderFlowOpen(true); }}>
+            <PackageCheck size={15}/> Track order
+          </button>
           <button
             className="delivery-location-nav"
             onClick={() => setLocationPickerOpen(true)}
@@ -172,14 +277,41 @@ export default function App() {
             onClick={() => document.getElementById("cart-panel").scrollIntoView({ behavior: "smooth" })}>
             <ShoppingBag size={18}/> Bag <b>{cartCount}</b>
           </button>
-          <button
-            className="sign-in-button"
-            onClick={() => notify("Sign in is not connected yet.")}
-            aria-label="Sign in to your account"
-          >
-            <UserRound size={16} />
-            <span>Sign In</span>
-          </button>
+          {authUser ? (
+            <button
+              className="sign-in-button"
+              onClick={shopiqSignOut}
+              title={`Signed in as ${authUser.email}. Click to sign out.`}
+            >
+              <UserRound size={16} />
+              <span>Sign Out</span>
+            </button>
+          ) : (
+            <>
+              <button
+                className="sign-in-button"
+                onClick={() => {
+                  setAuthMode("signin");
+                  setAuthMessage("");
+                  setAuthOpen(true);
+                }}
+                aria-label="Sign in to your account"
+              >
+                <UserRound size={16} />
+                <span>Sign In</span>
+              </button>
+              <button
+                className="signup-nav-button"
+                onClick={() => {
+                  setAuthMode("signup");
+                  setAuthMessage("");
+                  setAuthOpen(true);
+                }}
+              >
+                Sign Up
+              </button>
+            </>
+          )}
         </div>
       </header>
 
@@ -419,7 +551,7 @@ export default function App() {
               : <div className="saved-list">
                 {cart.map(p => <div key={p.id} className="saved-item"><span>{p.emoji}</span><div><b>{p.name}</b><small>Qty: {p.qty} · {money(p.price * p.qty)}</small></div><button aria-label={`Remove ${p.name}`} onClick={() => setCart(items => items.filter(x => x.id !== p.id))}>×</button></div>)}
                 <div className="cart-total"><span>Subtotal</span><b>{money(total)}</b></div>
-                <button className="checkout-button" onClick={() => setLocationPickerOpen(true)}>Continue to checkout <ArrowRight size={16}/></button>
+                <button className="checkout-button" onClick={() => { setOrderFlowMode("checkout"); setOrderFlowOpen(true); }}>Continue to checkout <ArrowRight size={16}/></button>
               </div>}
           </div>
         </section>
@@ -492,6 +624,125 @@ export default function App() {
           notify(`Delivery location saved: ${location.formattedAddress}`);
         }}
       />
+
+      <OrderFlow
+        open={orderFlowOpen}
+        mode={orderFlowMode}
+        cart={cart}
+        total={total}
+        deliveryLocation={deliveryLocation}
+        onClose={() => setOrderFlowOpen(false)}
+        onNeedLocation={() => {
+          setOrderFlowOpen(false);
+          setLocationPickerOpen(true);
+        }}
+      />
+
+
+      {authOpen && (
+        <div
+          className="shopiq-auth-overlay"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setAuthOpen(false);
+          }}
+        >
+          <section
+            className="shopiq-auth-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="shopiq-auth-title"
+          >
+            <button
+              type="button"
+              className="shopiq-auth-close"
+              onClick={() => setAuthOpen(false)}
+              aria-label="Close authentication dialog"
+            >×</button>
+
+            <div className="shopiq-auth-brand">
+              <span className="brand-mark">S</span>
+              <span>ShopIQ<span className="brand-ai"> AI</span></span>
+            </div>
+
+            <span className="shopiq-auth-kicker">A SMARTER WAY TO SHOP</span>
+            <h2 id="shopiq-auth-title">
+              {authMode === "signup" ? "Create your account" : "Welcome back"}
+            </h2>
+            <p className="shopiq-auth-description">
+              {authMode === "signup"
+                ? "Join ShopIQ and keep your shopping experience in one place."
+                : "Sign in to continue your ShopIQ experience."}
+            </p>
+
+            <form className="shopiq-auth-form" onSubmit={handleShopiqAuth}>
+              {authMode === "signup" && (
+                <label>
+                  Full name
+                  <input
+                    type="text"
+                    autoComplete="name"
+                    placeholder="Enter your name"
+                    value={authName}
+                    onChange={event => setAuthName(event.target.value)}
+                    required
+                  />
+                </label>
+              )}
+
+              <label>
+                Email address
+                <input
+                  type="email"
+                  autoComplete="email"
+                  placeholder="you@example.com"
+                  value={authEmail}
+                  onChange={event => setAuthEmail(event.target.value)}
+                  required
+                />
+              </label>
+
+              <label>
+                Password
+                <input
+                  type="password"
+                  autoComplete={authMode === "signup" ? "new-password" : "current-password"}
+                  placeholder={authMode === "signup" ? "At least 8 characters" : "Enter your password"}
+                  value={authPassword}
+                  onChange={event => setAuthPassword(event.target.value)}
+                  minLength={authMode === "signup" ? 8 : undefined}
+                  required
+                />
+              </label>
+
+              {authMessage && (
+                <p className="shopiq-auth-error" role="alert">{authMessage}</p>
+              )}
+
+              <button type="submit" className="shopiq-auth-submit">
+                {authMode === "signup" ? "Create account" : "Sign in"}
+              </button>
+            </form>
+
+            <p className="shopiq-auth-switch">
+              {authMode === "signup" ? "Already have an account?" : "New to ShopIQ?"}
+              {" "}
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthMode(authMode === "signup" ? "signin" : "signup");
+                  setAuthMessage("");
+                }}
+              >
+                {authMode === "signup" ? "Sign in" : "Create an account"}
+              </button>
+            </p>
+            <p className="shopiq-auth-disclaimer">
+              Demo account only. This prototype stores account data in this browser,
+              not in a secure authentication service.
+            </p>
+          </section>
+        </div>
+      )}
 
       {notice && <div className="toast" role="status">{notice}</div>}
     </div>

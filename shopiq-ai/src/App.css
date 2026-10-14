@@ -945,3 +945,177 @@ a:focus-visible {
     height: 14px;
   }
 }
+
+
+
+/* SHOPIQ_DEMO_AUTH_V1 */
+.signup-nav-button {
+  border: 1px solid #214b38;
+  background: #214b38;
+  color: #fffdf6;
+  padding: 11px 17px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.signup-nav-button:hover, .shopiq-auth-submit:hover {
+  background: #173a29;
+  transform: translateY(-1px);
+}
+.shopiq-auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 22px;
+  background: rgba(18, 30, 22, .62);
+  backdrop-filter: blur(7px);
+  animation: shopiqAuthFade .2s ease-out;
+}
+.shopiq-auth-modal {
+  width: min(100%, 440px);
+  position: relative;
+  margin: auto;
+  padding: 38px;
+  border: 1px solid #e6e3d8;
+  border-radius: 8px;
+  background: #faf9f5;
+  color: #263b2c;
+  box-shadow: 0 24px 90px #0003;
+  animation: shopiqAuthRise .25s ease-out;
+}
+.shopiq-auth-close {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: transparent;
+  color: #536457;
+  font-size: 29px;
+  cursor: pointer;
+}
+.shopiq-auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+.shopiq-auth-brand .brand-mark {
+  flex: 0 0 34px;
+}
+.shopiq-auth-kicker {
+  color: #66816a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.shopiq-auth-modal h2 {
+  margin: 10px 0 8px;
+  color: #233b2b;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 30px;
+  line-height: 1.2;
+  letter-spacing: -.6px;
+}
+.shopiq-auth-description {
+  margin: 0 0 24px;
+  color: #718073;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.shopiq-auth-form {
+  display: grid;
+  gap: 16px;
+}
+.shopiq-auth-form label {
+  display: grid;
+  gap: 8px;
+  color: #334b39;
+  font-size: 12px;
+  font-weight: 700;
+}
+.shopiq-auth-form input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 46px;
+  padding: 12px 13px;
+  border: 1px solid #dedfd4;
+  border-radius: 4px;
+  outline: none;
+  background: #fffefa;
+  color: #263b2c;
+  font: inherit;
+  font-weight: 400;
+}
+.shopiq-auth-form input:focus {
+  border-color: #608369;
+  box-shadow: 0 0 0 3px #60836920;
+}
+.shopiq-auth-submit {
+  min-height: 48px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 4px;
+  background: #214b38;
+  color: #fffdf6;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.shopiq-auth-error {
+  margin: 0;
+  color: #a02e2e;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.shopiq-auth-switch {
+  margin: 20px 0 0;
+  text-align: center;
+  color: #657568;
+  font-size: 12px;
+}
+.shopiq-auth-switch button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #214b38;
+  font: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.shopiq-auth-disclaimer {
+  margin: 18px 0 0;
+  color: #8a9185;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.6;
+}
+@keyframes shopiqAuthFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes shopiqAuthRise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 600px) {
+  .signup-nav-button { padding: 10px 11px; font-size: 11px; }
+  .shopiq-auth-overlay { padding: 13px; }
+  .shopiq-auth-modal { padding: 29px 22px; }
+  .shopiq-auth-modal h2 { font-size: 27px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shopiq-auth-overlay, .shopiq-auth-modal { animation: none; }
+}
