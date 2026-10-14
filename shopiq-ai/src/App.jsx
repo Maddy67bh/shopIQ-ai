@@ -1,5 +1,6 @@
 import "./shopiq-animations.css";
 import { useState } from "react";
+import LocationPicker from "./LocationPicker";
 import {
   Search, ShoppingBag, Heart, Sparkles, ArrowRight, Star,
   TrendingUp, Zap, Menu, Bot, UserRound, Send, MessageCircle, X
@@ -19,6 +20,9 @@ const categories = ["All Products", "Electronics", "Lifestyle", "Accessories", "
 const money = n => "₹" + n.toLocaleString("en-IN");
 
 export default function App() {
+  const [locationPickerOpen, setLocationPickerOpen] = useState(false);
+  const [deliveryLocation, setDeliveryLocation] = useState(null);
+
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Products");
   const [cart, setCart] = useState([]);
@@ -145,6 +149,15 @@ export default function App() {
         </nav>
 
         <div className="nav-actions">
+          <button
+            className="delivery-location-nav"
+            onClick={() => setLocationPickerOpen(true)}
+            aria-label="Choose delivery location"
+            title={deliveryLocation?.formattedAddress || "Choose delivery location"}
+          >
+            <span aria-hidden="true">📍</span>
+            <span>{deliveryLocation?.city ? `Deliver to ${deliveryLocation.city}` : "Location"}</span>
+          </button>
           <label className="search-box">
             <Search size={17}/>
             <input value={search} onChange={e => setSearch(e.target.value)}
@@ -406,7 +419,7 @@ export default function App() {
               : <div className="saved-list">
                 {cart.map(p => <div key={p.id} className="saved-item"><span>{p.emoji}</span><div><b>{p.name}</b><small>Qty: {p.qty} · {money(p.price * p.qty)}</small></div><button aria-label={`Remove ${p.name}`} onClick={() => setCart(items => items.filter(x => x.id !== p.id))}>×</button></div>)}
                 <div className="cart-total"><span>Subtotal</span><b>{money(total)}</b></div>
-                <button className="checkout-button" onClick={() => notify("Demo only: checkout is not connected yet.")}>Continue to checkout <ArrowRight size={16}/></button>
+                <button className="checkout-button" onClick={() => setLocationPickerOpen(true)}>Continue to checkout <ArrowRight size={16}/></button>
               </div>}
           </div>
         </section>
@@ -468,6 +481,17 @@ export default function App() {
         <span>Smarter discovery. Thoughtful choices.</span>
         <small>© 2026 ShopIQ AI · Prototype storefront</small>
       </footer>
+
+      <LocationPicker
+        open={locationPickerOpen}
+        initialLocation={deliveryLocation}
+        onClose={() => setLocationPickerOpen(false)}
+        onConfirm={location => {
+          setDeliveryLocation(location);
+          setLocationPickerOpen(false);
+          notify(`Delivery location saved: ${location.formattedAddress}`);
+        }}
+      />
 
       {notice && <div className="toast" role="status">{notice}</div>}
     </div>
