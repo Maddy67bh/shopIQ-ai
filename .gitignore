@@ -6,3 +6,11 @@ shopiq-ai/dist/
 .env
 .env.*
 !.env.example
+
+# Dependencies and generated files
+node_modules/
+shopiq-ai/node_modules/
+shopiq-ai/dist/
+.env
+.env.*
+!.env.example
