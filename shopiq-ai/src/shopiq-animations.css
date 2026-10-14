@@ -1,0 +1,51 @@
+/* ShopIQ AI — Black & Champagne Gold motion system */
+:root {
+  --shopiq-black: #11100F;
+  --shopiq-charcoal: #1C1A17;
+  --shopiq-gold: #C6A56B;
+  --shopiq-gold-light: #E7D4AA;
+  --shopiq-ivory: #F7F2E9;
+}
+@keyframes shopiqFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes shopiqGlow {
+  0%, 100% { box-shadow: 0 0 14px #C6A56B22; }
+  50% { box-shadow: 0 0 30px #C6A56B55; }
+}
+@keyframes shopiqSpin {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
+}
+@keyframes shopiqReveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.product-card, .product-item {
+  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+.product-card:hover, .product-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 42px #00000030;
+  border-color: #C6A56B66;
+}
+.shopiq-ai-orb {
+  animation: shopiqFloat 4s ease-in-out infinite, shopiqGlow 3s ease-in-out infinite;
+}
+.shopiq-orbit { animation: shopiqSpin 10s linear infinite; }
+.hero-proof, .hero-art-premium, .recommendation-card {
+  animation: shopiqReveal .8s ease both;
+}
+.hero-art-premium { animation-delay: .12s; }
+.recommendation-card { animation-delay: .2s; }
+button, a { transition: color .25s ease, background-color .25s ease, border-color .25s ease, transform .25s ease; }
+button:active { transform: scale(.98); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
