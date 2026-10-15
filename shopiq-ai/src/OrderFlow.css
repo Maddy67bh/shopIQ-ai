@@ -1,0 +1,134 @@
+.sq-order-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  overflow-y: auto;
+  background: rgba(17, 30, 23, .58);
+  backdrop-filter: blur(9px);
+}
+.sq-order-panel {
+  position: relative;
+  width: min(100%, 480px);
+  max-height: 94vh;
+  overflow-y: auto;
+  padding: 32px;
+  border: 1px solid rgba(255,255,255,.7);
+  border-radius: 25px;
+  background: #fbf8f0;
+  color: #1f3026;
+  box-shadow: 0 25px 90px rgba(0,0,0,.24);
+}
+.sq-order-close {
+  position: absolute;
+  top: 12px;
+  right: 17px;
+  border: 0;
+  background: transparent;
+  color: #263c2e;
+  font-size: 30px;
+  cursor: pointer;
+}
+.sq-order-eyebrow {
+  margin: 0 0 9px;
+  color: #568064;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.sq-order-panel h2 {
+  margin: 0 0 8px;
+  font-size: clamp(27px, 5vw, 36px);
+  letter-spacing: -1.2px;
+}
+.sq-order-subtitle, .sq-order-success > p {
+  color: #6e786f;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.sq-order-form {
+  display: grid;
+  gap: 15px;
+  margin-top: 23px;
+}
+.sq-order-form label {
+  display: grid;
+  gap: 7px;
+  color: #34463a;
+  font-size: 13px;
+  font-weight: 700;
+}
+.sq-order-form input, .sq-order-form textarea, .sq-order-form select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #dce2d8;
+  border-radius: 11px;
+  outline: none;
+  background: #fffefa;
+  color: #24352a;
+  font: inherit;
+  font-weight: 400;
+}
+.sq-order-form input:focus, .sq-order-form textarea:focus, .sq-order-form select:focus {
+  border-color: #6c9877;
+  box-shadow: 0 0 0 3px rgba(108,152,119,.13);
+}
+.sq-order-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-top: 1px solid #e1e4dc;
+  font-size: 15px;
+}
+.sq-order-summary strong { font-size: 21px; }
+.sq-order-submit {
+  width: 100%;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: #254c35;
+  color: white;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+  transition: transform .2s, background .2s;
+}
+.sq-order-submit:hover {
+  transform: translateY(-2px);
+  background: #356747;
+}
+.sq-order-note {
+  margin: 0;
+  color: #82877f;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+.sq-order-success { padding-top: 12px; text-align: center; }
+.sq-order-check {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin: 8px auto 20px;
+  border-radius: 50%;
+  background: #e1efdf;
+  color: #2d6a43;
+  font-size: 30px;
+}
+.sq-order-id {
+  margin: 20px 0;
+  padding: 14px;
+  border: 1px dashed #a6bba8;
+  border-radius: 12px;
+  background: #f3f5eb;
+  font-size: 13px;
+}
+.sq-order-total { margin-bottom: 22px; font-weight: 700; }
+@media (max-width: 480px) {
+  .sq-order-panel { padding: 26px 20px; border-radius: 19px; }
+}
