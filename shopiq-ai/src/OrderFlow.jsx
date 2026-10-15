@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./OrderFlow.css";
 
 export default function OrderFlow(props) {
+  if (!props.open) return null;
   const [customer, setCustomer] = useState({
     name: "",
     phone: "",
