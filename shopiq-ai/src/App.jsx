@@ -1,4 +1,3 @@
-import OrderFlow from "./OrderFlow";
 import "./shopiq-animations.css";
 import { useState } from "react";
 import LocationPicker from "./LocationPicker";
@@ -118,9 +117,6 @@ export default function App() {
     setAuthUser(null);
     notify("You have signed out.");
   }
-
-  const [orderFlowOpen, setOrderFlowOpen] = useState(false);
-  const [orderFlowMode, setOrderFlowMode] = useState("checkout");
 
   const [locationPickerOpen, setLocationPickerOpen] = useState(false);
   const [deliveryLocation, setDeliveryLocation] = useState(null);
@@ -622,19 +618,6 @@ export default function App() {
           setDeliveryLocation(location);
           setLocationPickerOpen(false);
           notify(`Delivery location saved: ${location.formattedAddress}`);
-        }}
-      />
-
-      <OrderFlow
-        open={orderFlowOpen}
-        mode={orderFlowMode}
-        cart={cart}
-        total={total}
-        deliveryLocation={deliveryLocation}
-        onClose={() => setOrderFlowOpen(false)}
-        onNeedLocation={() => {
-          setOrderFlowOpen(false);
-          setLocationPickerOpen(true);
         }}
       />
 
