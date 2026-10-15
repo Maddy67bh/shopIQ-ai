@@ -1400,3 +1400,31 @@ a:focus-visible {
     min-height: 210px;
   }
 }
+
+/* FIX: Prevent product images from enlarging on click/hover */
+#recommended-for-you .recommendation-grid img,
+#recommended-for-you .premium-recommendation-card img,
+#recommended-for-you .shopiq-gallery-image,
+.shopiq-gallery-image,
+.recommendation-card img {
+  transform: none !important;
+  scale: 1 !important;
+  transition: none !important;
+}
+
+#recommended-for-you .recommendation-grid > *:hover img,
+#recommended-for-you .premium-recommendation-card:hover img,
+#recommended-for-you .shopiq-gallery-image:hover,
+.shopiq-gallery-image:hover,
+.recommendation-card:hover img {
+  transform: none !important;
+  scale: 1 !important;
+}
+
+/* Keep image size stable when clicked */
+#recommended-for-you img:active,
+.shopiq-gallery-image:active,
+.recommendation-card img:active {
+  transform: none !important;
+  scale: 1 !important;
+}
