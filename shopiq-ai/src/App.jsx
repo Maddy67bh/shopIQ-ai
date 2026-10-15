@@ -6,12 +6,12 @@ import {Search, ShoppingBag, Heart, Sparkles, ArrowRight, Star,
 import "./App.css";
 
 const products = [
-  { id: 1, name: "Aura Wireless Headphones", category: "Electronics", price: 2499, old: 3999, rating: 4.8, emoji: "🎧", tag: "BESTSELLER" , image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=85"},
-  { id: 2, name: "Minimal Ceramic Bottle", category: "Lifestyle", price: 899, old: 1299, rating: 4.6, emoji: "🍶", tag: "TRENDING", image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=900&q=85" },
-  { id: 3, name: "Urban Everyday Backpack", category: "Accessories", price: 1799, old: 2499, rating: 4.7, emoji: "🎒", tag: "POPULAR" , image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=85"},
-  { id: 4, name: "Smart Fitness Watch", category: "Electronics", price: 3299, old: 4999, rating: 4.9, emoji: "⌚", tag: "TOP RATED" , image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=85"},
-  { id: 5, name: "Cloud Comfort Sneakers", category: "Fashion", price: 2199, old: 2999, rating: 4.7, emoji: "👟", tag: "NEW ARRIVAL", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85" },
-  { id: 6, name: "Everyday Desk Lamp", category: "Lifestyle", price: 1499, old: 1999, rating: 4.5, emoji: "💡", tag: "SMART PICK", image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=85" }
+  { id: 1, name: "Aura Wireless Headphones", category: "Electronics", price: 2499, old: 3999, rating: 4.8, emoji: "🎧", tag: "BESTSELLER" , image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=max&w=900&q=85"},
+  { id: 2, name: "Minimal Ceramic Bottle", category: "Lifestyle", price: 899, old: 1299, rating: 4.6, emoji: "🍶", tag: "TRENDING", image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=max&w=900&q=85" },
+  { id: 3, name: "Urban Everyday Backpack", category: "Accessories", price: 1799, old: 2499, rating: 4.7, emoji: "🎒", tag: "POPULAR" , image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=max&w=900&q=85"},
+  { id: 4, name: "Smart Fitness Watch", category: "Electronics", price: 3299, old: 4999, rating: 4.9, emoji: "⌚", tag: "TOP RATED" , image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=max&w=900&q=85"},
+  { id: 5, name: "Cloud Comfort Sneakers", category: "Fashion", price: 2199, old: 2999, rating: 4.7, emoji: "👟", tag: "NEW ARRIVAL", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=max&w=900&q=85" },
+  { id: 6, name: "Everyday Desk Lamp", category: "Lifestyle", price: 1499, old: 1999, rating: 4.5, emoji: "💡", tag: "SMART PICK", image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=max&w=900&q=85" }
 ];
 
 const categories = ["All Products", "Electronics", "Lifestyle", "Accessories", "Fashion"];
@@ -23,40 +23,40 @@ import { useState as useShopIQGalleryState } from "react";
 function ShopIQProductGallery({ product }) {
   const imagesById = {
     101: [
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=1000&q=85"
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=max&w=1000&q=85"
     ],
     102: [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?auto=format&fit=crop&w=1000&q=85"
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?auto=format&fit=max&w=1000&q=85"
     ],
     103: [
-      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=1000&q=85"
+      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=max&w=1000&q=85"
     ],
     104: [
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=1000&q=85"
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=max&w=1000&q=85"
     ],
     105: [
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1622560480654-d96214fdc887?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&w=1000&q=85"
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1622560480654-d96214fdc887?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=max&w=1000&q=85"
     ],
     106: [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85&sat=-10",
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85&brightness=5",
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85&sat=10"
+      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=max&w=1000&q=85",
+      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=max&w=1000&q=85&sat=-10",
+      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=max&w=1000&q=85&brightness=5",
+      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=max&w=1000&q=85&sat=10"
     ]
   };
 
@@ -477,7 +477,7 @@ export default function App() {
           <div className="hero-art hero-art-premium">
             <div className="hero-editorial-image">
               <img
-                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=90"
+                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=max&w=1200&q=90"
                 alt="Premium wireless headphones from the ShopIQ collection"
               />
               <span className="hero-image-label">THE EVERYDAY EDIT</span>
