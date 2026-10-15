@@ -459,42 +459,6 @@ export default function App() {
       </header>
 
       <main>
-
-      <section className="curated-collection">
-        <p className="curated-eyebrow">THE CURATED COLLECTION</p>
-        <h2 className="curated-heading">Find your <em>favourite.</em></h2>
-        <p className="curated-subtitle">
-          Everyday essentials, thoughtfully selected.
-        </p>
-
-        <div className="curated-image-grid">
-          <article className="curated-image-card">
-            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=85"
-                 alt="Premium wireless headphones" loading="lazy" />
-            <div className="curated-image-caption">Sound essentials<span>Elevate your everyday</span></div>
-          </article>
-          <article className="curated-image-card">
-            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=85"
-                 alt="Everyday sneakers" loading="lazy" />
-            <div className="curated-image-caption">Everyday style<span>Made to move with you</span></div>
-          </article>
-          <article className="curated-image-card">
-            <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=85"
-                 alt="Structured everyday handbag" loading="lazy" />
-            <div className="curated-image-caption">Carry beautifully<span>Details that stand out</span></div>
-          </article>
-          <article className="curated-image-card">
-            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=85"
-                 alt="Modern everyday backpack" loading="lazy" />
-            <div className="curated-image-caption">Daily companions<span>Thoughtful, useful, timeless</span></div>
-          </article>
-        </div>
-
-        <a className="curated-collection-link" href="#products">
-          EXPLORE THE COLLECTION <span aria-hidden="true">↗</span>
-        </a>
-      </section>
-
         <section className="hero">
           <div className="hero-content">
             <div className="eyebrow"><span className="live-dot"/> YOUR PERSONAL AI SHOPPING ASSISTANT</div>
