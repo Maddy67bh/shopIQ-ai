@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd shopiq-ai && npm run build",
+  "outputDirectory": "shopiq-ai/dist",
+  "installCommand": "cd shopiq-ai && npm install"
+}
