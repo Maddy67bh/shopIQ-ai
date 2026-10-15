@@ -1305,3 +1305,165 @@ a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .shopiq-gallery-image, .shopiq-gallery-open:hover .shopiq-gallery-image { transition: none; transform: none; }
 }
+
+
+/* SHOPIQ CURATED COLLECTION ANIMATIONS */
+.curated-collection {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(48px, 7vw, 100px) clamp(18px, 5vw, 76px);
+  background: linear-gradient(135deg, #f8f6ef 0%, #eeeee5 58%, #e1e9df 100%);
+  color: #173d30;
+  border-radius: 26px;
+  isolation: isolate;
+}
+.curated-collection::before,
+.curated-collection::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: .24;
+  z-index: -1;
+  pointer-events: none;
+  animation: collectionGlow 9s ease-in-out infinite alternate;
+}
+.curated-collection::before {
+  background: #a6c6a9;
+  top: -130px;
+  right: -60px;
+}
+.curated-collection::after {
+  background: #d7c8a8;
+  bottom: -180px;
+  left: 12%;
+  animation-delay: -4s;
+}
+.curated-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  color: #55735e;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.curated-eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+}
+.curated-heading {
+  max-width: 760px;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(42px, 7vw, 86px);
+  font-weight: 500;
+  letter-spacing: -.055em;
+  line-height: .98;
+}
+.curated-heading em {
+  color: #63816a;
+  font-weight: 400;
+}
+.curated-subtitle {
+  max-width: 460px;
+  margin: 20px 0 36px;
+  color: #68756b;
+  font-size: clamp(14px, 1.6vw, 17px);
+  line-height: 1.8;
+}
+.curated-image-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 22px);
+}
+.curated-image-card {
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+  border-radius: 18px;
+  background: #e8e7df;
+  box-shadow: 0 10px 35px rgba(26, 55, 39, .07);
+  transform: translateY(22px);
+  opacity: 0;
+  animation: collectionReveal .75s cubic-bezier(.2,.7,.2,1) forwards;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.curated-image-card:nth-child(2) { animation-delay: .12s; }
+.curated-image-card:nth-child(3) { animation-delay: .24s; }
+.curated-image-card:nth-child(4) { animation-delay: .36s; }
+.curated-image-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 45px rgba(26, 55, 39, .15);
+}
+.curated-image-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  transition: transform .7s cubic-bezier(.2,.7,.2,1), filter .4s ease;
+}
+.curated-image-card:hover img {
+  transform: scale(1.07);
+  filter: saturate(1.06);
+}
+.curated-image-caption {
+  padding: 14px 15px 17px;
+  color: #1b3c2e;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: .01em;
+  background: rgba(250, 249, 244, .94);
+}
+.curated-image-caption span {
+  display: block;
+  margin-top: 5px;
+  color: #788277;
+  font-size: 11px;
+  font-weight: 400;
+}
+.curated-collection-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  color: #fff;
+  background: #214b38;
+  border-radius: 999px;
+  padding: 13px 21px;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  transition: background .25s ease, transform .25s ease;
+}
+.curated-collection-link:hover {
+  background: #32684e;
+  transform: translateY(-2px);
+}
+@keyframes collectionReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes collectionGlow {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-22px, 18px, 0) scale(1.12); }
+}
+@media (max-width: 760px) {
+  .curated-collection { padding: 42px 16px; border-radius: 18px; }
+  .curated-image-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .curated-image-caption { padding: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .curated-collection::before,
+  .curated-collection::after,
+  .curated-image-card { animation: none; opacity: 1; transform: none; }
+  .curated-image-card img,
+  .curated-image-card,
+  .curated-collection-link { transition: none; }
+}
