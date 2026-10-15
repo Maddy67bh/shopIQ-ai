@@ -1218,3 +1218,90 @@ a:focus-visible {
   }
 }
 
+
+
+/* SHOPIQ PRODUCT GALLERY */
+.shopiq-gallery-card { position: relative; }
+.shopiq-gallery-open {
+  display: block; width: 100%; padding: 0; border: 0;
+  text-align: inherit; color: inherit; background: transparent; cursor: zoom-in;
+}
+.shopiq-gallery-stage {
+  position: relative; overflow: hidden; width: 100%;
+  background: #f6f4ee; aspect-ratio: 1 / 1;
+}
+.shopiq-gallery-image {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  transition: opacity .25s ease, transform .35s ease;
+}
+.shopiq-gallery-open:hover .shopiq-gallery-image { transform: scale(1.035); }
+.shopiq-gallery-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.75);
+  border-radius: 50%; background: rgba(255,255,255,.92); color: #26392b;
+  font-size: 25px; line-height: 1; cursor: pointer; z-index: 2;
+  display: grid; place-items: center; padding: 0;
+}
+.shopiq-gallery-prev { left: 9px; }
+.shopiq-gallery-next { right: 9px; }
+.shopiq-gallery-count {
+  position: absolute; right: 10px; bottom: 10px; z-index: 2;
+  padding: 5px 8px; border-radius: 20px; background: rgba(25,35,27,.72);
+  color: white; font-size: 10px; letter-spacing: .5px;
+}
+.shopiq-gallery-thumbs {
+  display: flex; gap: 7px; padding: 9px 0 2px; overflow-x: auto;
+}
+.shopiq-gallery-thumb {
+  flex: 0 0 54px; width: 54px; height: 54px; overflow: hidden;
+  padding: 0; border: 1px solid #e4e2da; border-radius: 7px;
+  background: #f7f5ef; cursor: pointer;
+}
+.shopiq-gallery-thumb.is-active { border: 2px solid #385b42; }
+.shopiq-gallery-thumb img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.shopiq-gallery-hint {
+  display: block; padding: 7px 0 2px; font-size: 9px; letter-spacing: 1px;
+  color: #627363; text-align: left;
+}
+.shopiq-detail-backdrop {
+  position: fixed; inset: 0; z-index: 10000; overflow-y: auto;
+  display: grid; place-items: center; padding: 22px;
+  background: rgba(17,24,19,.72); backdrop-filter: blur(8px);
+}
+.shopiq-detail-modal {
+  position: relative; width: min(960px, 100%); max-height: 92vh; overflow-y: auto;
+  display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr);
+  gap: 28px; padding: 28px; border-radius: 18px;
+  background: #fbfaf6; color: #26352a; box-shadow: 0 30px 100px rgba(0,0,0,.25);
+}
+.shopiq-detail-close {
+  position: absolute; top: 12px; right: 14px; z-index: 3;
+  width: 36px; height: 36px; border: 0; border-radius: 50%;
+  background: #eeece4; color: #26352a; font-size: 25px; cursor: pointer;
+}
+.shopiq-detail-gallery { min-width: 0; }
+.shopiq-gallery-large { aspect-ratio: 1 / 1; border-radius: 10px; }
+.shopiq-detail-info { align-self: center; padding: 12px 6px; }
+.shopiq-detail-kicker { font-size: 10px; letter-spacing: 1.5px; color: #71806f; }
+.shopiq-detail-info h2 { margin: 14px 0; font-size: clamp(25px,3vw,36px); line-height: 1.15; }
+.shopiq-detail-rating { color: #936d24; font-size: 14px; }
+.shopiq-detail-rating span { color: #7e837a; font-size: 12px; }
+.shopiq-detail-price { font-size: 25px; font-weight: 750; }
+.shopiq-detail-price del { margin-left: 10px; color: #8b8d85; font-size: 14px; font-weight: 400; }
+.shopiq-detail-description { color: #6d756c; line-height: 1.7; font-size: 13px; }
+.shopiq-detail-controls { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+.shopiq-detail-controls button {
+  padding: 11px 14px; border: 1px solid #d7d9cf; border-radius: 8px;
+  background: #fff; color: #294532; cursor: pointer;
+}
+.shopiq-detail-controls button:first-child { background: #294532; color: white; }
+.shopiq-detail-note { margin-top: 20px; color: #92958b; font-size: 10px; line-height: 1.6; }
+@media (max-width: 700px) {
+  .shopiq-detail-backdrop { padding: 10px; place-items: start center; }
+  .shopiq-detail-modal { grid-template-columns: 1fr; gap: 14px; padding: 18px; max-height: 96vh; }
+  .shopiq-detail-info { padding: 0 2px 8px; }
+  .shopiq-gallery-thumb { flex-basis: 47px; width: 47px; height: 47px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shopiq-gallery-image, .shopiq-gallery-open:hover .shopiq-gallery-image { transition: none; transform: none; }
+}

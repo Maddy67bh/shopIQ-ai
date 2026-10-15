@@ -17,6 +17,153 @@ const products = [
 const categories = ["All Products", "Electronics", "Lifestyle", "Accessories", "Fashion"];
 const money = n => "₹" + n.toLocaleString("en-IN");
 
+
+import { useState as useShopIQGalleryState } from "react";
+
+function ShopIQProductGallery({ product }) {
+  const imagesById = {
+    101: [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=1000&q=85"
+    ],
+    102: [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?auto=format&fit=crop&w=1000&q=85"
+    ],
+    103: [
+      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=1000&q=85"
+    ],
+    104: [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=1000&q=85"
+    ],
+    105: [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1622560480654-d96214fdc887?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&w=1000&q=85"
+    ],
+    106: [
+      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85&sat=-10",
+      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85&brightness=5",
+      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85&sat=10"
+    ]
+  };
+
+  const images = imagesById[product.id] || imagesById[101];
+  const [active, setActive] = useShopIQGalleryState(0);
+  const [detailsOpen, setDetailsOpen] = useShopIQGalleryState(false);
+  const [touchStart, setTouchStart] = useShopIQGalleryState(null);
+
+  const move = (step) => setActive((current) =>
+    (current + step + images.length) % images.length
+  );
+
+  const gallery = (large = false) => (
+    <>
+      <div
+        className={`shopiq-gallery-stage ${large ? "shopiq-gallery-large" : ""}`}
+        onTouchStart={(event) => setTouchStart(event.touches[0].clientX)}
+        onTouchEnd={(event) => {
+          if (touchStart === null) return;
+          const delta = event.changedTouches[0].clientX - touchStart;
+          if (Math.abs(delta) > 40) move(delta < 0 ? 1 : -1);
+          setTouchStart(null);
+        }}
+      >
+        <img
+          src={images[active]}
+          alt={`${product.name} - image ${active + 1}`}
+          className="premium-product-image shopiq-gallery-image"
+          loading="lazy"
+          onError={(event) => {
+            event.currentTarget.style.opacity = "0.35";
+          }}
+        />
+        <button type="button" className="shopiq-gallery-arrow shopiq-gallery-prev"
+          aria-label="Previous image" onClick={() => move(-1)}>‹</button>
+        <button type="button" className="shopiq-gallery-arrow shopiq-gallery-next"
+          aria-label="Next image" onClick={() => move(1)}>›</button>
+        <span className="shopiq-gallery-count">{active + 1} / {images.length}</span>
+      </div>
+      <div className="shopiq-gallery-thumbs" aria-label="Product images">
+        {images.map((image, index) => (
+          <button
+            type="button"
+            key={`${product.id}-${index}`}
+            className={`shopiq-gallery-thumb ${active === index ? "is-active" : ""}`}
+            aria-label={`Show image ${index + 1}`}
+            aria-pressed={active === index}
+            onClick={() => setActive(index)}
+          >
+            <img src={image} alt="" loading="lazy" />
+          </button>
+        ))}
+      </div>
+    </>
+  );
+
+  return (
+    <>
+      <div className="premium-product-visual shopiq-gallery-card">
+        <span className="premium-product-tag">{product.tag}</span>
+        <button type="button" className="shopiq-gallery-open"
+          onClick={() => setDetailsOpen(true)}
+          aria-label={`View ${product.name} images and details`}>
+          {gallery()}
+          <span className="shopiq-gallery-hint">VIEW DETAILS ↗</span>
+        </button>
+      </div>
+
+      {detailsOpen && (
+        <div className="shopiq-detail-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setDetailsOpen(false);
+          }}>
+          <section className="shopiq-detail-modal" role="dialog"
+            aria-modal="true" aria-label={`${product.name} details`}>
+            <button type="button" className="shopiq-detail-close"
+              aria-label="Close product details"
+              onClick={() => setDetailsOpen(false)}>×</button>
+            <div className="shopiq-detail-gallery">{gallery(true)}</div>
+            <div className="shopiq-detail-info">
+              <span className="shopiq-detail-kicker">{product.category} · CURATED COLLECTION</span>
+              <h2>{product.name}</h2>
+              <p className="shopiq-detail-rating">★ {product.rating} <span>Customer rating</span></p>
+              <p className="shopiq-detail-price">
+                {typeof product.price === "number" ? `₹${product.price.toLocaleString("en-IN")}` : product.price}
+                <del>{typeof product.old === "number" ? `₹${product.old.toLocaleString("en-IN")}` : ""}</del>
+              </p>
+              <p className="shopiq-detail-description">
+                Thoughtfully selected for everyday style, comfort and a premium shopping experience.
+                Explore the product gallery to view more images.
+              </p>
+              <div className="shopiq-detail-controls">
+                <button type="button" onClick={() => move(1)}>Next image →</button>
+                <button type="button" onClick={() => setDetailsOpen(false)}>Continue shopping</button>
+              </div>
+              <p className="shopiq-detail-note">
+                Image gallery preview. A true 360° spin requires a real sequence of product-angle photographs or a 3D model.
+              </p>
+            </div>
+          </section>
+        </div>
+      )}
+    </>
+  );
+}
+
 export default function App() {
 
   // SHOPIQ_DEMO_AUTH_V1
@@ -488,22 +635,7 @@ export default function App() {
       { id: 106, name: "Everyday Desk Lamp", category: "Home", price: 1499, old: 2199, rating: 4.6, emoji: "💡", tag: "HOME FAVOURITE" }
     ].map(p => (
       <article className="recommendation-card premium-recommendation-card" key={p.id}>
-        <div className="premium-product-visual">
-          <span className="premium-product-tag">{p.tag}</span>
-          <img
-            className="premium-product-image"
-            src={({
-              101: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=85",
-              102: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=85",
-              103: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=85",
-              104: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85",
-              105: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=85",
-              106: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=85"
-            })[p.id]}
-            alt={p.name}
-            loading="lazy"
-          />
-        </div>
+        <ShopIQProductGallery product={p} />
         <div className="recommendation-product-info">
           <h3>{p.name}</h3>
           <div className="recommendation-rating">
