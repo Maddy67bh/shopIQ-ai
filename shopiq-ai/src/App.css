@@ -1927,3 +1927,104 @@ textarea:focus {
   }
 }
 
+
+/* ===== ShopIQ: Quick-view modal layout fix ===== */
+
+.shopiq-detail-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  padding: 24px !important;
+  box-sizing: border-box !important;
+  overflow-y: auto !important;
+  background: rgba(18, 24, 19, .72) !important;
+  backdrop-filter: blur(7px);
+}
+
+.shopiq-detail-modal {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 28px !important;
+  width: min(900px, 100%) !important;
+  min-width: 0 !important;
+  max-width: 900px !important;
+  max-height: calc(100dvh - 48px) !important;
+  margin: auto !important;
+  padding: 28px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+  border-radius: 18px !important;
+  background: #fffdf7 !important;
+  color: #26352a !important;
+  box-shadow: 0 24px 90px rgba(0, 0, 0, .28) !important;
+}
+
+.shopiq-detail-gallery,
+.shopiq-detail-info {
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.shopiq-detail-gallery .shopiq-gallery-stage {
+  height: clamp(240px, 35vw, 390px) !important;
+}
+
+.shopiq-detail-info h2 {
+  font-size: clamp(24px, 3vw, 34px) !important;
+  line-height: 1.2 !important;
+  overflow-wrap: anywhere;
+}
+
+.shopiq-detail-description,
+.shopiq-detail-note {
+  line-height: 1.65 !important;
+  overflow-wrap: anywhere;
+}
+
+.shopiq-detail-close {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  z-index: 10 !important;
+  width: 36px !important;
+  height: 36px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 50% !important;
+  background: #f0eee6 !important;
+  color: #26352a !important;
+  cursor: pointer;
+}
+
+@media (max-width: 650px) {
+  .shopiq-detail-backdrop {
+    padding: 12px !important;
+  }
+
+  .shopiq-detail-modal {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 18px !important;
+    max-height: calc(100dvh - 24px) !important;
+    padding: 20px 16px !important;
+    border-radius: 14px !important;
+  }
+
+  .shopiq-detail-gallery .shopiq-gallery-stage {
+    height: clamp(210px, 65vw, 290px) !important;
+  }
+
+  .shopiq-detail-info h2 {
+    font-size: 25px !important;
+  }
+}
+
