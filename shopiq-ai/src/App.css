@@ -1717,3 +1717,213 @@ textarea:focus {
     max-height: 100% !important;
   }
 }
+
+/* ===== ShopIQ AI: Product Gallery + Card Alignment Fix ===== */
+
+/* Keep product cards equal height */
+.premium-product-visual,
+.shopiq-gallery-card {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.shopiq-gallery-card {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Stable image frame for every gallery image */
+.shopiq-gallery-stage {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: clamp(240px, 28vw, 340px) !important;
+  aspect-ratio: 1 / 1;
+  overflow: hidden !important;
+  box-sizing: border-box;
+  isolation: isolate;
+}
+
+.shopiq-gallery-stage .shopiq-gallery-image,
+.shopiq-gallery-stage img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+  transition: opacity .2s ease !important;
+}
+
+/* Compact round navigation arrows */
+.shopiq-gallery-stage .shopiq-gallery-arrow {
+  position: absolute !important;
+  z-index: 5 !important;
+  top: 50% !important;
+  left: auto !important;
+  right: auto !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 1px solid rgba(30, 35, 30, .12) !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, .94) !important;
+  color: #202820 !important;
+  font-size: 25px !important;
+  line-height: 1 !important;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .10) !important;
+  transform: translateY(-50%) !important;
+  cursor: pointer;
+}
+
+.shopiq-gallery-stage .shopiq-gallery-prev {
+  left: 10px !important;
+  right: auto !important;
+}
+
+.shopiq-gallery-stage .shopiq-gallery-next {
+  right: 10px !important;
+  left: auto !important;
+}
+
+/* Image counter stays in the corner */
+.shopiq-gallery-stage .shopiq-gallery-count {
+  position: absolute !important;
+  z-index: 4 !important;
+  right: 10px !important;
+  bottom: 10px !important;
+  width: auto !important;
+  padding: 5px 9px !important;
+  border-radius: 20px !important;
+  background: rgba(255, 255, 255, .92) !important;
+  color: #202820 !important;
+  font-size: 12px !important;
+}
+
+/* Visible, consistently sized thumbnails */
+.shopiq-gallery-thumbs {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 12px !important;
+  padding: 3px 2px 8px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+}
+
+.shopiq-gallery-thumbs .shopiq-gallery-thumb {
+  position: relative !important;
+  flex: 0 0 54px !important;
+  width: 54px !important;
+  min-width: 54px !important;
+  max-width: 54px !important;
+  height: 54px !important;
+  min-height: 54px !important;
+  padding: 3px !important;
+  overflow: hidden !important;
+  border: 1px solid #e4e1d8 !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  cursor: pointer;
+}
+
+.shopiq-gallery-thumbs .shopiq-gallery-thumb.is-active {
+  border: 2px solid #315c45 !important;
+}
+
+.shopiq-gallery-thumbs .shopiq-gallery-thumb img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Product cards: content flows vertically */
+.product-card,
+.recommendation-card,
+.shop-iq-product-card {
+  min-width: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.product-card,
+.recommendation-card,
+.shop-iq-product-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card .title,
+.recommendation-card .title,
+.shop-iq-product-card .title {
+  min-height: 2.8em;
+  line-height: 1.4;
+}
+
+.product-card .add-to-bag,
+.recommendation-card .add-to-bag,
+.shop-iq-product-card .add-to-bag {
+  width: 100%;
+  margin-top: auto;
+}
+
+/* Keep gallery/detail trigger from stretching arrows */
+.shopiq-gallery-open {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  text-align: inherit;
+}
+
+/* Prevent hover effects from enlarging the selected image */
+.shopiq-gallery-stage img:hover,
+.shopiq-gallery-thumbs img:hover {
+  transform: none !important;
+  scale: 1 !important;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+  .shopiq-gallery-stage {
+    height: clamp(220px, 75vw, 300px) !important;
+  }
+
+  .shopiq-gallery-stage .shopiq-gallery-arrow {
+    width: 32px !important;
+    min-width: 32px !important;
+    max-width: 32px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+  }
+
+  .shopiq-gallery-stage .shopiq-gallery-prev {
+    left: 7px !important;
+  }
+
+  .shopiq-gallery-stage .shopiq-gallery-next {
+    right: 7px !important;
+  }
+}
+
