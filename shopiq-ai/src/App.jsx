@@ -1,5 +1,6 @@
 import "./shopiq-animations.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import LocationPicker from "./LocationPicker";
 import {Search, ShoppingBag, Heart, Sparkles, ArrowRight, Star,
   TrendingUp, Zap, Menu, Bot, UserRound, Send, MessageCircle, X, PackageCheck} from "lucide-react";
@@ -125,7 +126,7 @@ function ShopIQProductGallery({ product }) {
         </button>
       </div>
 
-      {detailsOpen && (
+      {detailsOpen && createPortal(
         <div className="shopiq-detail-backdrop"
           role="presentation"
           onMouseDown={(event) => {
@@ -158,7 +159,8 @@ function ShopIQProductGallery({ product }) {
               </p>
             </div>
           </section>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
@@ -270,8 +272,22 @@ export default function App() {
 
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Products");
-  const [cart, setCart] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+  const [cart, setCart] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem("shopiq-cart") || "[]");
+      return Array.isArray(saved) ? saved : [];
+    } catch {
+      return [];
+    }
+  });
+  const [wishlist, setWishlist] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem("shopiq-wishlist") || "[]");
+      return Array.isArray(saved) ? saved : [];
+    } catch {
+      return [];
+    }
+  });
   const [notice, setNotice] = useState("");
   const [shopiqChatOpen, setShopiqChatOpen] = useState(false);
   const [shopiqChatDraft, setShopiqChatDraft] = useState("");
@@ -288,6 +304,47 @@ export default function App() {
   );
   const cartCount = cart.reduce((s, p) => s + p.qty, 0);
   const total = cart.reduce((s, p) => s + p.price * p.qty, 0);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("shopiq-cart", JSON.stringify(cart));
+    } catch (error) {
+      console.warn("ShopIQ could not save the cart.", error);
+    }
+  }, [cart]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("shopiq-wishlist", JSON.stringify(wishlist));
+    } catch (error) {
+      console.warn("ShopIQ could not save the wishlist.", error);
+    }
+  }, [wishlist]);
+
+  function recommendationScore(product) {
+    let score = Number(product.rating) || 0;
+
+    if (category !== "All Products" && product.category === category) {
+      score += 5;
+    }
+
+    const interests = products.filter(item =>
+      wishlist.includes(item.id) ||
+      cart.some(cartItem => cartItem.id === item.id)
+    );
+
+    for (const item of interests) {
+      if (item.category === product.category) score += 4;
+
+      const words = item.name.toLowerCase().split(/[^a-z0-9]+/)
+        .filter(word => word.length > 3);
+      const candidate = product.name.toLowerCase();
+
+      if (words.some(word => candidate.includes(word))) score += 2;
+    }
+
+    return score;
+  }
 
   function notify(message) {
     setNotice(message);
@@ -633,7 +690,7 @@ export default function App() {
       { id: 104, name: "Cloud Comfort Sneakers", category: "Footwear", price: 2799, old: 3999, rating: 4.8, emoji: "👟", tag: "COMFORT PICK" },
       { id: 105, name: "Urban Everyday Backpack", category: "Accessories", price: 1799, old: 2499, rating: 4.7, emoji: "🎒", tag: "EVERYDAY ESSENTIAL" },
       { id: 106, name: "Everyday Desk Lamp", category: "Home", price: 1499, old: 2199, rating: 4.6, emoji: "💡", tag: "HOME FAVOURITE" }
-    ].map(p => (
+    ].sort((a, b) => recommendationScore(b) - recommendationScore(a)).map(p => (
       <article className="recommendation-card premium-recommendation-card" key={p.id}>
         <ShopIQProductGallery product={p} />
         <div className="recommendation-product-info">
