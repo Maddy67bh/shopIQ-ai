@@ -16,3 +16,131 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   outline-offset: 3px;
 }
 ::selection { background: #d7e5d2; color: #203c29; }
+
+/* ===== Recommended cards: round 2 ===== */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* same image box for every card, no empty gap */
+.product-card .main-image {
+  aspect-ratio: 1 / 1;
+  height: auto;
+  overflow: hidden;
+}
+.product-card .main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* text area: button always sticks to bottom */
+.product-card .info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 12px;
+}
+.product-card .title {
+  min-height: 2.6em;
+  line-height: 1.3;
+}
+.product-card .add-to-bag {
+  margin-top: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* broken hover/quick-view panel: keep it inside card, normal text size */
+.product-card .quick-view,
+.product-card .details,
+.product-card .overlay {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: 16px;
+  background: rgba(255,255,255,.97);
+  color: #222;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.product-card .quick-view h1,
+.product-card .quick-view h2,
+.product-card .quick-view h3,
+.product-card .details h2,
+.product-card .details h3 {
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+.product-grid, .carousel-track { display: flex; align-items: stretch; gap: 16px; }
+.product-grid > *, .carousel-track > * { flex: 0 0 200px; }
+
+/* ===== Modal fix ===== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,.55);
+}
+.modal-backdrop > * {
+  width: min(900px, 92vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 16px;
+}
+
+
+
+/* Fix recommendation product images: show full image */
+.product-card img,
+.recommendation-card img,
+.recommended-product img,
+.recommendation img,
+[class*="recommend"] img,
+[class*="product"] img {
+  max-width: 100%;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+.product-card,
+.recommendation-card,
+.recommended-product,
+.recommendation,
+[class*="recommend"] {
+  min-width: 0;
+}
+
+.product-card img,
+.recommendation-card img,
+.recommended-product img,
+[class*="recommend"] img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .product-card img,
+  .recommendation-card img,
+  .recommended-product img,
+  .recommendation img,
+  [class*="recommend"] img {
+    max-height: 240px;
+    object-fit: contain !important;
+  }
+}
+
+/* Prevent image previews from being clipped by parent cards */
+.product-card,
+.recommendation-card,
+.recommended-product {
+  overflow: visible;
+}
